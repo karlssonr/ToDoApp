@@ -15,6 +15,10 @@
 		4A169777256E469A000E208D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A169775256E469A000E208D /* LaunchScreen.storyboard */; };
 		4A169782256E469A000E208D /* ToDoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A169781256E469A000E208D /* ToDoAppTests.swift */; };
 		4A16978D256E469A000E208D /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A16978C256E469A000E208D /* ToDoAppUITests.swift */; };
+		4A1697A7256E96E6000E208D /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1697A6256E96E6000E208D /* Task.swift */; };
+		4A4F1CEE256FB62600BC531A /* TaskCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F1CED256FB62600BC531A /* TaskCellViewModel.swift */; };
+		4A4F1CF6256FB99F00BC531A /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F1CF5256FB99F00BC531A /* TaskListViewModel.swift */; };
+		4A4F1D3A257654E700BC531A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F1D39257654E700BC531A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		4A169788256E469A000E208D /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A16978C256E469A000E208D /* ToDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITests.swift; sourceTree = "<group>"; };
 		4A16978E256E469A000E208D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A1697A6256E96E6000E208D /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4A4F1CED256FB62600BC531A /* TaskCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCellViewModel.swift; sourceTree = "<group>"; };
+		4A4F1CF5256FB99F00BC531A /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
+		4A4F1D39257654E700BC531A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +107,10 @@
 		4A169769256E4696000E208D /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
-				4A16976A256E4696000E208D /* AppDelegate.swift */,
-				4A16976C256E4696000E208D /* SceneDelegate.swift */,
+				4A4F1CEC256FB60E00BC531A /* ViewModels */,
 				4A16976E256E4696000E208D /* ContentView.swift */,
+				4A1697A5256E96D7000E208D /* Model */,
+				4A1697AE256E970A000E208D /* App */,
 				4A169770256E469A000E208D /* Assets.xcassets */,
 				4A169775256E469A000E208D /* LaunchScreen.storyboard */,
 				4A169778256E469A000E208D /* Info.plist */,
@@ -132,8 +141,35 @@
 			children = (
 				4A16978C256E469A000E208D /* ToDoAppUITests.swift */,
 				4A16978E256E469A000E208D /* Info.plist */,
+				4A4F1D39257654E700BC531A /* GoogleService-Info.plist */,
 			);
 			path = ToDoAppUITests;
+			sourceTree = "<group>";
+		};
+		4A1697A5256E96D7000E208D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A1697A6256E96E6000E208D /* Task.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4A1697AE256E970A000E208D /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4A16976C256E4696000E208D /* SceneDelegate.swift */,
+				4A16976A256E4696000E208D /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4A4F1CEC256FB60E00BC531A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				4A4F1CED256FB62600BC531A /* TaskCellViewModel.swift */,
+				4A4F1CF5256FB99F00BC531A /* TaskListViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +292,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4F1D3A257654E700BC531A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,9 +303,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A1697A7256E96E6000E208D /* Task.swift in Sources */,
 				4A16976B256E4696000E208D /* AppDelegate.swift in Sources */,
 				4A16976D256E4696000E208D /* SceneDelegate.swift in Sources */,
 				4A16976F256E4696000E208D /* ContentView.swift in Sources */,
+				4A4F1CEE256FB62600BC531A /* TaskCellViewModel.swift in Sources */,
+				4A4F1CF6256FB99F00BC531A /* TaskListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
