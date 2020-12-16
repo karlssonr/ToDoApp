@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var taskListVM = TaskListViewModel()
+    @ObservedObject var taskListVM = TodoListViewModel()
     
     let tasks = testDataTasks
     
@@ -25,7 +25,7 @@ struct ContentView: View {
                         TaskCell(taskCellVM: taskCellVM)
                     }
                     if presentAddNewItem {
-                        TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
+                        TaskCell(taskCellVM: TodoCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
                             self.presentAddNewItem.toggle()
                             
@@ -60,7 +60,7 @@ struct ContentView: View {
     
     struct TaskCell: View {
         
-        @ObservedObject var taskCellVM: TaskCellViewModel
+        @ObservedObject var taskCellVM: TodoCellViewModel
         
         var onCommit: (Task) -> (Void) = { _ in }
         

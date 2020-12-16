@@ -10,14 +10,15 @@ import Combine
 
 class TaskCellViewModel: ObservableObject, Identifiable {
     
-   @Published var task: Task
+   @Published var todoRepository = TodoRepository()
+   @Published var task: Todo
     
     var id = ""
     @Published var completionStateIconName = ""
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(task: Task) {
+    init(task: Todo) {
         
         self.task = task
         
@@ -29,10 +30,18 @@ class TaskCellViewModel: ObservableObject, Identifiable {
             .store(in: &cancellables)
         
         $task
-            .map { task in
+            .compactMap { task in
                 task.id
             }
             .assign(to: \.id, on: self)
+            .store(in: &cancellables)
+        
+        $task
+            .dropFirst()
+            .debounce(for: 0.8, scheduler: RunLoop.main)
+            .sink { task in
+                self.todoRepository.updateTask(task)
+            }
             .store(in: &cancellables)
     }
 }
