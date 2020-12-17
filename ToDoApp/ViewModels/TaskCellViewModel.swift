@@ -10,15 +10,15 @@ import Combine
 
 class TaskCellViewModel: ObservableObject, Identifiable {
     
-   @Published var todoRepository = TodoRepository()
-   @Published var task: Todo
+   @Published var taskRepository = TaskRepository()
+   @Published var task: Task
     
     var id = ""
     @Published var completionStateIconName = ""
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(task: Todo) {
+    init(task: Task) {
         
         self.task = task
         
@@ -40,7 +40,7 @@ class TaskCellViewModel: ObservableObject, Identifiable {
             .dropFirst()
             .debounce(for: 0.8, scheduler: RunLoop.main)
             .sink { task in
-                self.todoRepository.updateTask(task)
+                self.taskRepository.updateTask(task)
             }
             .store(in: &cancellables)
     }

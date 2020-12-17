@@ -10,7 +10,7 @@ import Combine
 
 class TaskListViewModel: ObservableObject {
     
-    @Published var taskRepository = TodoRepository()
+    @Published var taskRepository = TaskRepository()
     @Published var taskCellViewModels = [TaskCellViewModel]()
     
     private var cancellables = Set<AnyCancellable>()
@@ -26,7 +26,7 @@ class TaskListViewModel: ObservableObject {
 
     }
     
-    func addTodo(task: Todo) {
+    func addTask(task: Task) {
         taskRepository.addTask(task)
 //        let taskVM = TaskCellViewModel(task: task)
 //        self.taskCellViewModels.append(taskVM)

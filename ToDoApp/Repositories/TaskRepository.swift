@@ -14,7 +14,7 @@ class TaskRepository: ObservableObject {
 
     let db = Firestore.firestore()
 
-    @Published var tasks = [Todo]()
+    @Published var tasks = [Task]()
 
     init() {
         loadData()
@@ -30,7 +30,7 @@ class TaskRepository: ObservableObject {
             if let querySnapshot = querySnapshot {
                 self.tasks = querySnapshot.documents.compactMap { document in
                     do {
-                        let x = try document.data(as: Todo.self)
+                        let x = try document.data(as: Task.self)
                         return x
                     }
                     catch {
@@ -43,7 +43,7 @@ class TaskRepository: ObservableObject {
 
     }
 
-    func addTask(_ task: Todo) {
+    func addTask(_ task: Task) {
         do {
             var addedTask = task
             addedTask.userId = Auth.auth().currentUser?.uid
@@ -55,7 +55,7 @@ class TaskRepository: ObservableObject {
         }
     }
     
-    func updateTask(_ task: Todo) {
+    func updateTask(_ task: Task) {
         if let taskID = task.id {
             do {
                 try db.collection("tasks").document(taskID).setData(from: task)
