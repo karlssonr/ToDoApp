@@ -26,7 +26,7 @@ struct ContentView: View {
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
                         
-                        delete()
+                //        delete()
                         
                     })
                     if presentAddNewItem {
@@ -57,9 +57,9 @@ struct ContentView: View {
         
     }
     
-    func delete() {
-        TaskRepository.deleteTask()
-    }
+//    func delete() {
+//        TaskRepository.deleteTask()
+//    }
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
