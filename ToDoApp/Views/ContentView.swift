@@ -52,7 +52,7 @@ struct ContentView: View {
                 
                 
             }
-            .navigationBarTitle("Tasks")
+            .navigationBarTitle("Tasks")// knulla mig i röven
         }
         
     }
