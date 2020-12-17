@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
     
+    
     let tasks = testDataTasks
     
     @State var presentAddNewItem = false
@@ -23,7 +24,11 @@ struct ContentView: View {
                 List {
                     ForEach(taskListVM.taskCellViewModels) { taskCellVM in
                         TaskCell(taskCellVM: taskCellVM)
-                    }
+                    }.onDelete(perform: { indexSet in
+                        
+                        delete()
+                        
+                    })
                     if presentAddNewItem {
                         TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
@@ -31,7 +36,7 @@ struct ContentView: View {
                             
                         }
                     }
-                }
+                }.navigationBarItems(trailing: EditButton())
                 
                 Button(action: { self.presentAddNewItem.toggle()}) {
                     HStack{
@@ -50,6 +55,10 @@ struct ContentView: View {
             .navigationBarTitle("Tasks")
         }
         
+    }
+    
+    func delete() {
+        TaskRepository.deleteTask()
     }
     
     struct ContentView_Previews: PreviewProvider {
@@ -80,4 +89,6 @@ struct ContentView: View {
         }
     }
     
+
+
 }
