@@ -11,15 +11,31 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class TaskRepository: ObservableObject {
-
-    let db = Firestore.firestore()
-
+    
     @Published var tasks = [Task]()
-
+    
+    public func enableOffline() {
+       let settings = FirestoreSettings()
+       settings.isPersistenceEnabled = false
+       
+       let db = Firestore.firestore()
+       db.settings = settings
+   }
+   
+    public func setupCacheSize() {
+       let settings = Firestore.firestore().settings
+       settings.cacheSizeBytes = FirestoreCacheSizeUnlimited
+       Firestore.firestore().settings = settings
+   }
+    
+    let db = Firestore.firestore()
+    
     init() {
+        enableOffline()
         loadData()
+        listenToOffline()
     }
-
+    
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
         
@@ -27,22 +43,21 @@ class TaskRepository: ObservableObject {
             .order(by: "createdTime")
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                self.tasks = querySnapshot.documents.compactMap { document in
-                    do {
-                        let x = try document.data(as: Task.self)
-                        return x
+                if let querySnapshot = querySnapshot {
+                    self.tasks = querySnapshot.documents.compactMap { document in
+                        do {
+                            let x = try document.data(as: Task.self)
+                            return x
+                        }
+                        catch {
+                            print(error)
+                        }
+                        return nil
                     }
-                    catch {
-                        print(error)
-                    }
-                    return nil
                 }
             }
-        }
-
     }
-
+    
     func addTask(_ task: Task) {
         do {
             var addedTask = task
@@ -64,7 +79,6 @@ class TaskRepository: ObservableObject {
                 fatalError("Unable to add task: \(error.localizedDescription)")
             }
         }
-
     }
     
     func deleteTask(task: Task) {
@@ -79,7 +93,33 @@ class TaskRepository: ObservableObject {
             }
         }
     }
+    
+    public func listenToOffline() {
+        let userId = Auth.auth().currentUser?.uid
+            let db = Firestore.firestore()
+            // [START listen_to_offline]
+            // Listen to metadata updates to receive a server snapshot even if
+            // the data is the same as the cached data.
+            db.collection("tasks").whereField("userId", isEqualTo: userId)
+                .addSnapshotListener(includeMetadataChanges: true) { querySnapshot, error in
+                    guard let snapshot = querySnapshot else {
+                        print("Error retreiving snapshot: \(error!)")
+                        return
+                    }
 
+                    for diff in snapshot.documentChanges {
+                        if diff.type == .added {
+                            print("New task: \(diff.document.data())")
+                        }
+                    }
+
+                    let source = snapshot.metadata.isFromCache ? "local cache" : "server"
+                    print("Metadata: Data fetched from \(source)")
+            }
+    
+}
+
+    
 }
 
 

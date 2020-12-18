@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct ContentView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
     
     
-    let tasks = testDataTasks
+    //let tasks = testDataTasks
     
     @State var presentAddNewItem = false
     
@@ -52,14 +53,10 @@ struct ContentView: View {
                 
                 
             }
-            .navigationBarTitle("Tasks")// knulla mig i röven
+            .navigationBarTitle("Tasks")
         }
         
     }
-    
-//    func delete() {
-//        TaskRepository.deleteTask()
-//    }
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
