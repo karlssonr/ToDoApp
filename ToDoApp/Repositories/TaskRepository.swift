@@ -14,7 +14,13 @@ class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
     
-    public func enableOffline() {
+    func cacheTasks() {
+        let cache = NSCache<NSString, NSArray>()
+        let taskArray = tasks
+        cache.setObject(taskArray as NSArray, forKey: "Task")
+    }
+    
+    func enableOffline() {
        let settings = FirestoreSettings()
        settings.isPersistenceEnabled = false
        
@@ -22,7 +28,7 @@ class TaskRepository: ObservableObject {
        db.settings = settings
    }
    
-    public func setupCacheSize() {
+    func setupCacheSize() {
        let settings = Firestore.firestore().settings
        settings.cacheSizeBytes = FirestoreCacheSizeUnlimited
        Firestore.firestore().settings = settings
@@ -33,14 +39,13 @@ class TaskRepository: ObservableObject {
     init() {
         enableOffline()
         loadData()
-        listenToOffline()
     }
     
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
         
         db.collection("tasks")
-            .order(by: "createdTime")
+            
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -68,6 +73,9 @@ class TaskRepository: ObservableObject {
         catch {
             fatalError("Unable to add task: \(error.localizedDescription)")
         }
+        do {
+            cacheTasks()
+        }
     }
     
     func updateTask(_ task: Task) {
@@ -93,32 +101,6 @@ class TaskRepository: ObservableObject {
             }
         }
     }
-    
-    public func listenToOffline() {
-        let userId = Auth.auth().currentUser?.uid
-            let db = Firestore.firestore()
-            // [START listen_to_offline]
-            // Listen to metadata updates to receive a server snapshot even if
-            // the data is the same as the cached data.
-            db.collection("tasks").whereField("userId", isEqualTo: userId)
-                .addSnapshotListener(includeMetadataChanges: true) { querySnapshot, error in
-                    guard let snapshot = querySnapshot else {
-                        print("Error retreiving snapshot: \(error!)")
-                        return
-                    }
-
-                    for diff in snapshot.documentChanges {
-                        if diff.type == .added {
-                            print("New task: \(diff.document.data())")
-                        }
-                    }
-
-                    let source = snapshot.metadata.isFromCache ? "local cache" : "server"
-                    print("Metadata: Data fetched from \(source)")
-            }
-    
-}
-
     
 }
 

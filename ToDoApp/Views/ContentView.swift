@@ -11,12 +11,8 @@ import FirebaseFirestore
 struct ContentView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
-    
-    
     //let tasks = testDataTasks
-    
     @State var presentAddNewItem = false
-    
     
     var body: some View {
         
@@ -34,11 +30,9 @@ struct ContentView: View {
                         TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
                             self.presentAddNewItem.toggle()
-                            
                         }
                     }
                 }.navigationBarItems(trailing: EditButton())
-                
                 Button(action: { self.presentAddNewItem.toggle()}) {
                     HStack{
                         Image(systemName: "plus.circle.fill")
@@ -47,15 +41,11 @@ struct ContentView: View {
                         
                         Text("Add New Task")
                     }
-                    
                 }
                 .padding()
-                
-                
             }
             .navigationBarTitle("Tasks")
         }
-        
     }
     
     struct ContentView_Previews: PreviewProvider {
@@ -65,12 +55,10 @@ struct ContentView: View {
     }
     
     struct TaskCell: View {
-        
         @ObservedObject var taskCellVM: TaskCellViewModel
-        
+
         var onCommit: (Task) -> (Void) = { _ in }
-        
-        
+                
         var body: some View {
             HStack {
                 Image(systemName: taskCellVM.task.completed ? "checkmark.circle.fill" : "circle")
@@ -85,7 +73,4 @@ struct ContentView: View {
             }
         }
     }
-    
-
-
 }
