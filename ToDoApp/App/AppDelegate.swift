@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Auth.auth().signInAnonymously()
+        FirestoreSettings().isPersistenceEnabled = false
         return true
     }
 

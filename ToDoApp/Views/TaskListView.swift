@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct TaskListView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
+
     
-    
-    let tasks = testDataTasks
+
     
     @State var presentAddNewItem = false
     
@@ -26,10 +26,14 @@ struct ContentView: View {
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
                         
-                //        delete()
+                        
+                
                         
                     })
+                    
+                    
                     if presentAddNewItem {
+                        
                         TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
                             self.presentAddNewItem.toggle()
@@ -38,7 +42,8 @@ struct ContentView: View {
                     }
                 }.navigationBarItems(trailing: EditButton())
                 
-                Button(action: { self.presentAddNewItem.toggle()}) {
+                Button(action: { self.presentAddNewItem.toggle()
+                }) {
                     HStack{
                         Image(systemName: "plus.circle.fill")
                             .resizable()
@@ -48,6 +53,7 @@ struct ContentView: View {
                     }
                     
                 }
+                .accessibility(identifier: "addTaskButton")
                 .padding()
                 
                 
@@ -57,13 +63,11 @@ struct ContentView: View {
         
     }
     
-//    func delete() {
-//        TaskRepository.deleteTask()
-//    }
+
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView()
+            TaskListView()
         }
     }
     
@@ -81,10 +85,13 @@ struct ContentView: View {
                     .frame(width: 20,height: 20)
                     .onTapGesture {
                         self.taskCellVM.task.completed.toggle()
-                    }
+                    }.accessibility(identifier: "checkMarkTask")
                 TextField("Enter the task title", text: $taskCellVM.task.title, onCommit: {
+                    
                     self.onCommit(self.taskCellVM.task)
+                    print("nu skapades den")
                 })
+                .accessibility(identifier: "taskNameTextField")
             }
         }
     }
