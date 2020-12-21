@@ -15,10 +15,16 @@ class TaskRepository: ObservableObject {
     let db = Firestore.firestore()
 
     @Published var tasks = [Task]()
+    
+    
+    
 
     init() {
         loadData()
+        
+    
     }
+    
 
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
