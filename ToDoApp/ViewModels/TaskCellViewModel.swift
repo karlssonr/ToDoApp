@@ -43,5 +43,6 @@ class TaskCellViewModel: ObservableObject, Identifiable {
                 self.taskRepository.updateTask(task)
             }
             .store(in: &cancellables)
+        
     }
 }

@@ -14,14 +14,17 @@ class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
     
+
     let db = Firestore.firestore()
     
     init() {
         enableOffline()
         loadData()
+        
+    
     }
     
-    
+   
     //Cache function
     func cacheTasks() {
         let taskArray = tasks
@@ -46,7 +49,7 @@ class TaskRepository: ObservableObject {
        Firestore.firestore().settings = settings
    }
     
-    
+   
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
         
