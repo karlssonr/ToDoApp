@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 
-struct ContentView: View {
+struct TaskListView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
     //let tasks = testDataTasks
@@ -22,8 +22,6 @@ struct ContentView: View {
                     ForEach(taskListVM.taskCellViewModels) { taskCellVM in
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
-                        
-                //        delete()
                         
                     })
                     if presentAddNewItem {
@@ -50,7 +48,7 @@ struct ContentView: View {
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView()
+            TaskListView()
         }
     }
     

@@ -14,12 +14,22 @@ class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
     
-    func cacheTasks() {
-        let cache = NSCache<NSString, NSArray>()
-        let taskArray = tasks
-        cache.setObject(taskArray as NSArray, forKey: "Task")
+    let db = Firestore.firestore()
+    
+    init() {
+        enableOffline()
+        loadData()
     }
     
+    
+    //Cache function
+    func cacheTasks() {
+        let taskArray = tasks
+        TaskCache.taskCache.setObject(taskArray as NSArray, forKey: "Task")
+    }
+    
+    
+    //Turn off Firestore cache
     func enableOffline() {
        let settings = FirestoreSettings()
        settings.isPersistenceEnabled = false
@@ -28,18 +38,14 @@ class TaskRepository: ObservableObject {
        db.settings = settings
    }
    
-    func setupCacheSize() {
+    
+    //Cache size
+    func cacheSize() {
        let settings = Firestore.firestore().settings
-       settings.cacheSizeBytes = FirestoreCacheSizeUnlimited
+       settings.cacheSizeBytes = 100
        Firestore.firestore().settings = settings
    }
     
-    let db = Firestore.firestore()
-    
-    init() {
-        enableOffline()
-        loadData()
-    }
     
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
@@ -52,6 +58,7 @@ class TaskRepository: ObservableObject {
                     self.tasks = querySnapshot.documents.compactMap { document in
                         do {
                             let x = try document.data(as: Task.self)
+                            self.cacheTasks()
                             return x
                         }
                         catch {
