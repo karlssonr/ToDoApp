@@ -6,17 +6,17 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+
 
 struct TaskListView: View {
     
     @ObservedObject var taskListVM = TaskListViewModel()
-
-    
-
     
     @State var presentAddNewItem = false
     
     
+
     var body: some View {
         
         NavigationView {
@@ -26,6 +26,7 @@ struct TaskListView: View {
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
                         
+
                         
                 
                         
@@ -44,6 +45,7 @@ struct TaskListView: View {
                 
                 Button(action: { self.presentAddNewItem.toggle()
                 }) {
+
                     HStack{
                         Image(systemName: "plus.circle.fill")
                             .resizable()
@@ -51,6 +53,7 @@ struct TaskListView: View {
                         
                         Text("Add New Task")
                     }
+
                     
                 }
                 .accessibility(identifier: "addTaskButton")
@@ -65,6 +68,7 @@ struct TaskListView: View {
     
 
     
+
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             TaskListView()
@@ -72,12 +76,14 @@ struct TaskListView: View {
     }
     
     struct TaskCell: View {
+
         
         @ObservedObject var taskCellVM: TaskCellViewModel
         
         var onCommit: (Task) -> (Void) = { _ in }
         
         
+
         var body: some View {
             HStack {
                 Image(systemName: taskCellVM.task.completed ? "checkmark.circle.fill" : "circle")
@@ -85,6 +91,7 @@ struct TaskListView: View {
                     .frame(width: 20,height: 20)
                     .onTapGesture {
                         self.taskCellVM.task.completed.toggle()
+
                     }.accessibility(identifier: "checkMarkTask")
                 TextField("Enter the task title", text: $taskCellVM.task.title, onCommit: {
                     
@@ -96,6 +103,7 @@ struct TaskListView: View {
         }
     }
     
+
 
 
 }

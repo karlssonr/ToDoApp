@@ -11,44 +11,68 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class TaskRepository: ObservableObject {
-
-    let db = Firestore.firestore()
-
+    
     @Published var tasks = [Task]()
     
-    
-    
 
+    let db = Firestore.firestore()
+    
     init() {
+        enableOffline()
         loadData()
         
     
     }
     
-
+   
+    //Cache function
+    func cacheTasks() {
+        let taskArray = tasks
+        TaskCache.taskCache.setObject(taskArray as NSArray, forKey: "Task")
+    }
+    
+    
+    //Turn off Firestore cache
+    func enableOffline() {
+       let settings = FirestoreSettings()
+       settings.isPersistenceEnabled = false
+       
+       let db = Firestore.firestore()
+       db.settings = settings
+   }
+   
+    
+    //Cache size
+    func cacheSize() {
+       let settings = Firestore.firestore().settings
+       settings.cacheSizeBytes = 100
+       Firestore.firestore().settings = settings
+   }
+    
+   
     func loadData() {
         let userId = Auth.auth().currentUser?.uid
         
         db.collection("tasks")
-            .order(by: "createdTime")
+            
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
-            if let querySnapshot = querySnapshot {
-                self.tasks = querySnapshot.documents.compactMap { document in
-                    do {
-                        let x = try document.data(as: Task.self)
-                        return x
+                if let querySnapshot = querySnapshot {
+                    self.tasks = querySnapshot.documents.compactMap { document in
+                        do {
+                            let x = try document.data(as: Task.self)
+                            self.cacheTasks()
+                            return x
+                        }
+                        catch {
+                            print(error)
+                        }
+                        return nil
                     }
-                    catch {
-                        print(error)
-                    }
-                    return nil
                 }
             }
-        }
-
     }
-
+    
     func addTask(_ task: Task) {
         do {
             var addedTask = task
@@ -58,6 +82,9 @@ class TaskRepository: ObservableObject {
         }
         catch {
             fatalError("Unable to add task: \(error.localizedDescription)")
+        }
+        do {
+            cacheTasks()
         }
     }
     
@@ -70,7 +97,6 @@ class TaskRepository: ObservableObject {
                 fatalError("Unable to add task: \(error.localizedDescription)")
             }
         }
-
     }
     
     func deleteTask(task: Task) {
@@ -85,7 +111,7 @@ class TaskRepository: ObservableObject {
             }
         }
     }
-
+    
 }
 
 
