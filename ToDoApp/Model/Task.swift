@@ -17,13 +17,3 @@ struct Task: Codable, Identifiable {
     var userId: String?
     
 }
-
-#if DEBUG
-let testDataTasks = [
-    Task(title: "Implement the UI", completed: true),
-    Task(title: "Connect to Firebase", completed: false),
-    Task(title: "?????", completed: false),
-    Task(title: "Profit!!", completed: false)
-    
-]
-#endif
