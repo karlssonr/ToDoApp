@@ -70,8 +70,6 @@ class TaskRepository: ObservableObject {
         
         let userId = Auth.auth().currentUser?.uid
         
-        
-        let userId = Auth.auth().currentUser?.uid
 
         db.collection("tasks")
 
@@ -96,12 +94,13 @@ class TaskRepository: ObservableObject {
     
 
     func addTask(_ task: Task) {
-//        do {
-//            var addedTask = task
-//            addedTask.userId = Auth.auth().currentUser?.uid
-//
-//            let _ = try db.collection("tasks").addDocument(from: addedTask)
-//        }
+        
+        do {
+            var addedTask = task
+            addedTask.userId = Auth.auth().currentUser?.uid
+
+            let _ = try! db.collection("tasks").addDocument(from: addedTask)
+        }
         
         do {
             cacheTasks()
