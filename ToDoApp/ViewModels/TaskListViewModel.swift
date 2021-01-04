@@ -12,13 +12,13 @@ class TaskListViewModel: ObservableObject {
     
     @Published var taskRepository = TaskRepository()
     @Published var taskCellViewModels = [TaskCellViewModel]()
-    let reachabilityManager = NetworkReachabilityManager(host: "www.google.com")
+    //let reachabilityManager = NetworkReachabilityManager(host: "www.google.com")
     
     private var cancellables = Set<AnyCancellable>()
     
     init() {
         
-        if reachabilityManager?.isReachable {
+       // if reachabilityManager!.isReachable {
             taskRepository.$tasks.map { tasks in
                 tasks.map { task in
                     TaskCellViewModel(task: task)
@@ -27,17 +27,20 @@ class TaskListViewModel: ObservableObject {
             .assign(to: \.taskCellViewModels, on: self)
             .store(in: &cancellables)
 
-        }
+    //    }
 
     }
     
+    
     func addTask(task: Task) {
         taskRepository.addTask(task)
+
 
     }
     
     func deleteTask(task: Task) {
         taskRepository.deleteTask(task: task)
+
 
     }
 }
