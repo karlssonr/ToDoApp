@@ -21,6 +21,8 @@ class TaskRepository: ObservableObject {
     init() {
         enableOffline()
         loadData()
+        Encryption.init()
+        
         
     
     }
@@ -30,6 +32,7 @@ class TaskRepository: ObservableObject {
     func cacheTasks() {
         let taskArray = tasks
         TaskCache.taskCache.setObject(taskArray as NSArray, forKey: "Task")
+
     }
     
     
@@ -52,6 +55,8 @@ class TaskRepository: ObservableObject {
     
    
     func loadData() {
+        
+        
         let userId = Auth.auth().currentUser?.uid
         
         db.collection("tasks")
@@ -75,53 +80,6 @@ class TaskRepository: ObservableObject {
     }
 
     
-//
-//    func sortTasks(arr: [Task]) -> [Task] {
-//
-////        var taskArray = arr
-////
-////
-////
-////
-////        taskArray.locations.sort(by: { $0.timestamp.seconds > $1.timestamp.seconds })
-////
-////
-////        var array = arr
-////
-////        for _ in 0..<array.count - 1 {
-////            for j in 0..<array.count - 1 {
-////
-////                if (array[j].createdTime > array[j].createdTime) {
-////
-////                    let temp = array[j]
-////                    array[j] = array[j+1]
-////                    array[j+1] = temp
-////                }
-////
-////
-////
-////            }
-////        }
-//
-//
-////
-////        var swap = true
-////
-////           while(swap){
-////               swap = false
-////            for(i in 0 until array.size-1){
-////                if(arr[i] > arr[i+1]){
-////                       val temp = arr[i]
-////                    arr[i] = arr[i+1]
-////                       arr[i + 1] = temp
-////                    swap = true
-////                                }
-////                            }
-////                        }
-////                        return arr
-//
-//
-//    }
 
     func addTask(_ task: Task) {
         do {
