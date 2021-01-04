@@ -14,31 +14,24 @@ class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
     
+    
     let db = Firestore.firestore()
     
     init() {
-        enableOffline()
+        //enableOffline()
         loadData()
-        //sortArray([Task])
+        sortByTitle()
+//        tasks.sort {
+//            $0.title < $1.title
+//        }
+//        print(sortArray(arr: [Task.ID]()))
+    }
+
+    func sortByTitle() {
+        tasks.sort { $0.title < $1.title }
+        print(TaskCache.taskCache)
     }
     
-    //sort Array
-    //func sortArray(arr:[Task]) -> [Task] {
-      //  var swap = true
-        //while(swap){
-          //  swap = false
-            //for(i in 0 until arr.size-1){
-              //  if(arr[i] > arr[i+1]){
-                //    var temp = arr[i]
-                  //  arr[i] = arr[i+1]
-                    //arr[i + 1] = temp
-                   // swap = true
-               // }
-           // }
-       // }
-       // return arr
-   // }
-
                 
     //Cache function
     func cacheTasks() {
@@ -66,10 +59,12 @@ class TaskRepository: ObservableObject {
     
    
     func loadData() {
-        let userId = Auth.auth().currentUser?.uid
         
+        
+        let userId = Auth.auth().currentUser?.uid
+
         db.collection("tasks")
-            
+
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -89,17 +84,18 @@ class TaskRepository: ObservableObject {
     }
     
     func addTask(_ task: Task) {
+//        do {
+//            var addedTask = task
+//            addedTask.userId = Auth.auth().currentUser?.uid
+//
+//            let _ = try db.collection("tasks").addDocument(from: addedTask)
+//        }
+        
         do {
-            var addedTask = task
-            addedTask.userId = Auth.auth().currentUser?.uid
-            
-            let _ = try db.collection("tasks").addDocument(from: addedTask)
+            cacheTasks()
         }
         catch {
             fatalError("Unable to add task: \(error.localizedDescription)")
-        }
-        do {
-            cacheTasks()
         }
     }
     
