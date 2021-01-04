@@ -15,19 +15,29 @@ class TaskRepository: ObservableObject {
     @Published var tasks = [Task]()
     
 
-
     let db = Firestore.firestore()
     
     init() {
-        enableOffline()
+        //enableOffline()
         loadData()
         Encryption.init()
         
         
-    
+   
+        sortByTitle()
+//        tasks.sort {
+//            $0.title < $1.title
+//        }
+//        print(sortArray(arr: [Task.ID]()))
+    }
+
+    func sortByTitle() {
+        tasks.sort { $0.title < $1.title }
+        print(TaskCache.taskCache)
+
     }
     
-   
+                
     //Cache function
     func cacheTasks() {
         let taskArray = tasks
@@ -55,12 +65,16 @@ class TaskRepository: ObservableObject {
     
    
     func loadData() {
+
         
         
         let userId = Auth.auth().currentUser?.uid
         
+        
+        let userId = Auth.auth().currentUser?.uid
+
         db.collection("tasks")
-            
+
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
@@ -82,17 +96,18 @@ class TaskRepository: ObservableObject {
     
 
     func addTask(_ task: Task) {
+//        do {
+//            var addedTask = task
+//            addedTask.userId = Auth.auth().currentUser?.uid
+//
+//            let _ = try db.collection("tasks").addDocument(from: addedTask)
+//        }
+        
         do {
-            var addedTask = task
-            addedTask.userId = Auth.auth().currentUser?.uid
-            
-            let _ = try db.collection("tasks").addDocument(from: addedTask)
+            cacheTasks()
         }
         catch {
             fatalError("Unable to add task: \(error.localizedDescription)")
-        }
-        do {
-            cacheTasks()
         }
     }
     

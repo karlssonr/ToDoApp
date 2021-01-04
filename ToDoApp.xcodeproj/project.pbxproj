@@ -25,6 +25,7 @@
 		6452FE2FEADF6EFA172C7976 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA06E405AAFA4EC3397939 /* Pods_ToDoApp_ToDoAppUITests.framework */; };
 		65DAF6154AB281209427EC53 /* Pods_ToDoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01DBDCC2CAA231056F75A04 /* Pods_ToDoAppTests.framework */; };
 		9135F2222590EB2D00C21BE0 /* TaskCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9135F2212590EB2D00C21BE0 /* TaskCache.swift */; };
+		91A5753225A22E4D00903589 /* crypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A5753125A22E4D00903589 /* crypt.swift */; };
 		EBF04D5E431C83682CD211AD /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AECD073A076432849557E4C /* Pods_ToDoApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		550F9929B6CE2233D6B8E2C5 /* Pods-ToDoApp-ToDoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-ToDoApp-ToDoAppUITests/Pods-ToDoApp-ToDoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		570E46FFE69C0871C4A0AC2F /* Pods-ToDoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoAppTests.release.xcconfig"; path = "Target Support Files/Pods-ToDoAppTests/Pods-ToDoAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		9135F2212590EB2D00C21BE0 /* TaskCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCache.swift; sourceTree = "<group>"; };
+		91A5753125A22E4D00903589 /* crypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = crypt.swift; sourceTree = "<group>"; };
 		CEDA06E405AAFA4EC3397939 /* Pods_ToDoApp_ToDoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp_ToDoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C8E6717C1FD2ABE5907F83 /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E01DBDCC2CAA231056F75A04 /* Pods_ToDoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +225,7 @@
 			children = (
 				4AEDA8452589E8720016FA78 /* TaskRepository.swift */,
 				9135F2212590EB2D00C21BE0 /* TaskCache.swift */,
+				91A5753125A22E4D00903589 /* crypt.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				4A4F1CEE256FB62600BC531A /* TaskCellViewModel.swift in Sources */,
 				4A4F1CF6256FB99F00BC531A /* TaskListViewModel.swift in Sources */,
 				4AEDA8462589E8720016FA78 /* TaskRepository.swift in Sources */,
+				91A5753225A22E4D00903589 /* crypt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +584,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -641,6 +646,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

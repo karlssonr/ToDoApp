@@ -17,6 +17,7 @@ class TaskListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
+
         
        // if reachabilityManager!.isReachable {
             taskRepository.$tasks.map { tasks in
@@ -34,7 +35,7 @@ class TaskListViewModel: ObservableObject {
         
 
     }
-    
+
     
     func addTask(task: Task) {
         taskRepository.addTask(task)
