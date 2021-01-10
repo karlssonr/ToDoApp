@@ -22,12 +22,15 @@ class TaskListViewModel: ObservableObject {
        // if reachabilityManager!.isReachable {
             taskRepository.$tasks.map { tasks in
                 tasks.map { task in
+                    
                     TaskCellViewModel(task: task)
+                    
                 }
             }
             .assign(to: \.taskCellViewModels, on: self)
             .store(in: &cancellables)
 
+       // print("task: ", taskRepository.$tasks)
     //    }
         
         
