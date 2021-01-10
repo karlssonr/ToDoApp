@@ -14,6 +14,10 @@ class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
     
+    var taskFromDB : Task?
+//    var titleArray : [String]
+    var titles = [String]()
+    
 
     let db = Firestore.firestore()
     
@@ -32,8 +36,12 @@ class TaskRepository: ObservableObject {
     }
 
     func sortByTitle() {
-        tasks.sort { $0.title < $1.title }
+        
+        var sortedTasks = tasks
+        
+        sortedTasks.sort { $0.title < $1.title }
         print(TaskCache.taskCache)
+        print("Tasks: ", tasks)
 
     }
     
@@ -66,7 +74,7 @@ class TaskRepository: ObservableObject {
    
     func loadData() {
 
-        
+        self.titles.removeAll()
         
         let userId = Auth.auth().currentUser?.uid
         
@@ -78,8 +86,25 @@ class TaskRepository: ObservableObject {
                 if let querySnapshot = querySnapshot {
                     self.tasks = querySnapshot.documents.compactMap { document in
                         do {
-                            let x = try document.data(as: Task.self)
+                            
+                            guard let x = try document.data(as: Task.self) else {return nil}
                             self.cacheTasks()
+                            print("Tasks!!!: " , x)
+                            self.taskFromDB = x
+                            
+                            
+                            
+                            self.titles.append(x.title)
+                            
+                           
+                            
+                            
+                            
+                            //print("TasksFromDB: ", self.taskFromDB?.title)
+                            //self.titleArray = self.taskFromDB
+                            //var titleArray = self.taskFromDB?.title
+                            //print("TitleArray:   ",titleArray)
+                            
                             return x
                         }
                         catch {
@@ -87,6 +112,7 @@ class TaskRepository: ObservableObject {
                         }
                         return nil
                     }
+                    print("!!! TitlesFromDB: ", self.titles)
                 }
             }
     }
