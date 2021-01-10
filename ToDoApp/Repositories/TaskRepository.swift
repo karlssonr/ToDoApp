@@ -50,6 +50,9 @@ class TaskRepository: ObservableObject {
     func cacheTasks() {
         let taskArray = tasks
         TaskCache.taskCache.setObject(taskArray as NSArray, forKey: "Task")
+        print("AAA",self.tasks)
+        print("BBB", taskArray)
+        
 
     }
     
@@ -88,7 +91,6 @@ class TaskRepository: ObservableObject {
                         do {
                             
                             guard let x = try document.data(as: Task.self) else {return nil}
-                            self.cacheTasks()
                             print("Tasks!!!: " , x)
                             self.taskFromDB = x
                             
@@ -96,14 +98,7 @@ class TaskRepository: ObservableObject {
                             
                             self.titles.append(x.title)
                             
-                           
-                            
-                            
-                            
-                            //print("TasksFromDB: ", self.taskFromDB?.title)
-                            //self.titleArray = self.taskFromDB
-                            //var titleArray = self.taskFromDB?.title
-                            //print("TitleArray:   ",titleArray)
+                        
                             
                             return x
                         }
@@ -113,6 +108,8 @@ class TaskRepository: ObservableObject {
                         return nil
                     }
                     print("!!! TitlesFromDB: ", self.titles)
+                    print("CCC", self.tasks)
+                    self.cacheTasks()
                 }
             }
     }
