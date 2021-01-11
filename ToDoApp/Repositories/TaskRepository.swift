@@ -15,33 +15,34 @@ class TaskRepository: ObservableObject {
     @Published var tasks = [Task]()
     
     var taskFromDB : Task?
-//    var titleArray : [String]
     var titles = [String]()
     
 
     let db = Firestore.firestore()
     
     init() {
-        //enableOffline()
+       
         loadData()
         Encryption.init()
         
         
    
-        sortByTitle()
-//        tasks.sort {
-//            $0.title < $1.title
-//        }
-//        print(sortArray(arr: [Task.ID]()))
+        
+
     }
 
     func sortByTitle() {
         
-        var sortedTasks = tasks
+        //var sortedTasks = titles
+        //self.titles.sorted()
         
-        sortedTasks.sort { $0.title < $1.title }
-        print(TaskCache.taskCache)
-        print("Tasks: ", tasks)
+        
+        
+        //sortedTasks.sort { $0 < $1 }
+        self.titles.sort { $0 < $1 }
+        print("123", TaskCache.taskCache)
+        //print("QQQTasks: ", sortedTasks)
+        print("111", self.titles)
 
     }
     
@@ -90,7 +91,10 @@ class TaskRepository: ObservableObject {
                     self.tasks = querySnapshot.documents.compactMap { document in
                         do {
                             
+                            
                             guard let x = try document.data(as: Task.self) else {return nil}
+
+                            print("Tasks: " , x)
                             print("Tasks!!!: " , x)
                             self.taskFromDB = x
                             
@@ -98,20 +102,37 @@ class TaskRepository: ObservableObject {
                             
                             self.titles.append(x.title)
                             
+
+    
+                            
+
+
                         
                             
                             return x
+                            
                         }
                         catch {
                             print(error)
                         }
                         return nil
+
                     }
+
                     print("!!! TitlesFromDB: ", self.titles)
                     print("CCC", self.tasks)
                     self.cacheTasks()
+
+
+                    
+
+                   
+
                 }
+                self.sortByTitle()
+                print("bög ", self.titles)
             }
+
     }
 
     
