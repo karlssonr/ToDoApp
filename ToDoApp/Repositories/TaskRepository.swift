@@ -32,28 +32,16 @@ class TaskRepository: ObservableObject {
     }
 
     func sortByTitle() {
-        
-        //var sortedTasks = titles
-        //self.titles.sorted()
-        
-        
-        
-        //sortedTasks.sort { $0 < $1 }
         self.titles.sort { $0 < $1 }
-        print("123", TaskCache.taskCache)
-        //print("QQQTasks: ", sortedTasks)
-        print("111", self.titles)
-
+        
     }
     
                 
     //Cache function
     func cacheTasks() {
         let taskArray = tasks
-        TaskCache.taskCache.setObject(taskArray as NSArray, forKey: "Task")
-        print("AAA",self.tasks)
-        print("BBB", taskArray)
-        
+        let object = TaskHolder.init(tasks: tasks)
+        TaskCache.taskCache.setObject(object , forKey: "Task")
 
     }
     
@@ -94,21 +82,14 @@ class TaskRepository: ObservableObject {
                             
                             guard let x = try document.data(as: Task.self) else {return nil}
 
-                            print("Tasks: " , x)
-                            print("Tasks!!!: " , x)
+    
                             self.taskFromDB = x
                             
                             
                             
                             self.titles.append(x.title)
                             
-
     
-                            
-
-
-                        
-                            
                             return x
                             
                         }
@@ -119,18 +100,19 @@ class TaskRepository: ObservableObject {
 
                     }
 
-                    print("!!! TitlesFromDB: ", self.titles)
-                    print("CCC", self.tasks)
-                    self.cacheTasks()
-
-
-                    
-
-                   
+         
 
                 }
+                self.cacheTasks()
                 self.sortByTitle()
-                print("bög ", self.titles)
+                print("sort ", self.titles)
+                
+                let taskFromCache = TaskCache.taskCache.object(forKey: "Task")
+
+                print("4444" , taskFromCache?.tasks)
+                
+                
+
             }
 
     }

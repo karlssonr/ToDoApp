@@ -20,6 +20,7 @@
 		4A4F1CF6256FB99F00BC531A /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F1CF5256FB99F00BC531A /* TaskListViewModel.swift */; };
 		4A4F1D3A257654E700BC531A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A4F1D39257654E700BC531A /* GoogleService-Info.plist */; };
 		4AB85EBC25A30B9500FECFE1 /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB85EBB25A30B9500FECFE1 /* Encryption.swift */; };
+		4ACD362E25ACC20F0017191A /* TaskHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD362D25ACC20F0017191A /* TaskHolder.swift */; };
 		4AEDA8262589E11B0016FA78 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AEDA8252589E11B0016FA78 /* GoogleService-Info.plist */; };
 		4AEDA8462589E8720016FA78 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEDA8452589E8720016FA78 /* TaskRepository.swift */; };
 		6452FE2FEADF6EFA172C7976 /* Pods_ToDoApp_ToDoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDA06E405AAFA4EC3397939 /* Pods_ToDoApp_ToDoAppUITests.framework */; };
@@ -68,6 +69,7 @@
 		4A4F1CF5256FB99F00BC531A /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		4A4F1D39257654E700BC531A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AB85EBB25A30B9500FECFE1 /* Encryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encryption.swift; sourceTree = "<group>"; };
+		4ACD362D25ACC20F0017191A /* TaskHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskHolder.swift; sourceTree = "<group>"; };
 		4AECD073A076432849557E4C /* Pods_ToDoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AEDA8252589E11B0016FA78 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AEDA8452589E8720016FA78 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				4AEDA8452589E8720016FA78 /* TaskRepository.swift */,
 				9135F2212590EB2D00C21BE0 /* TaskCache.swift */,
+				4ACD362D25ACC20F0017191A /* TaskHolder.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				4A16976F256E4696000E208D /* TaskListView.swift in Sources */,
 				4A4F1CEE256FB62600BC531A /* TaskCellViewModel.swift in Sources */,
 				4A4F1CF6256FB99F00BC531A /* TaskListViewModel.swift in Sources */,
+				4ACD362E25ACC20F0017191A /* TaskHolder.swift in Sources */,
 				4AEDA8462589E8720016FA78 /* TaskRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

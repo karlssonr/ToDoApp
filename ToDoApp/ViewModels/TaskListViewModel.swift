@@ -17,6 +17,8 @@ class TaskListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
+        
+    
 
         
        // if reachabilityManager!.isReachable {
@@ -30,8 +32,10 @@ class TaskListViewModel: ObservableObject {
             .assign(to: \.taskCellViewModels, on: self)
             .store(in: &cancellables)
 
-       // print("task: ", taskRepository.$tasks)
+        
     //    }
+        
+      
         
         
         

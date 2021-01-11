@@ -8,6 +8,8 @@
 import Foundation
 class TaskCache {
 
-    static let taskCache = NSCache<NSString, NSArray>()
+    static let taskCache = NSCache<NSString, TaskHolder>()
+    
+    
 
 }
