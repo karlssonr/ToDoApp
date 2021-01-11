@@ -93,14 +93,20 @@ class TaskRepository: ObservableObject {
                             
                             
                             guard let x = try document.data(as: Task.self) else {return nil}
+
                             print("Tasks: " , x)
+                            print("Tasks!!!: " , x)
                             self.taskFromDB = x
                             
                             
                             
                             self.titles.append(x.title)
                             
+
+    
                             
+
+
                         
                             
                             return x
@@ -117,9 +123,11 @@ class TaskRepository: ObservableObject {
                     print("CCC", self.tasks)
                     self.cacheTasks()
 
+
                     
 
                    
+
                 }
                 self.sortByTitle()
                 print("bög ", self.titles)
