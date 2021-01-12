@@ -21,19 +21,12 @@ class TaskRepository: ObservableObject {
     let db = Firestore.firestore()
     
     init() {
-       
         loadData()
         Encryption.init()
-        
-        
-   
-        
-
     }
 
     func sortByTitle() {
         self.titles.sort { $0 < $1 }
-        
     }
     
                 
@@ -42,7 +35,6 @@ class TaskRepository: ObservableObject {
         let taskArray = tasks
         let object = TaskHolder.init(tasks: tasks)
         TaskCache.taskCache.setObject(object , forKey: "Task")
-
     }
     
     
@@ -70,7 +62,6 @@ class TaskRepository: ObservableObject {
         
         let userId = Auth.auth().currentUser?.uid
         
-
         db.collection("tasks")
 
             .whereField("userId", isEqualTo: userId)
@@ -78,15 +69,8 @@ class TaskRepository: ObservableObject {
                 if let querySnapshot = querySnapshot {
                     self.tasks = querySnapshot.documents.compactMap { document in
                         do {
-                            
-                            
                             guard let x = try document.data(as: Task.self) else {return nil}
-
-    
                             self.taskFromDB = x
-                            
-                            
-                            
                             self.titles.append(x.title)
                             
     

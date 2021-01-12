@@ -25,49 +25,31 @@ struct TaskListView: View {
                     ForEach(taskListVM.taskCellViewModels) { taskCellVM in
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
-                        
-
-                        
-                
-                        
                     })
-                    
-                    
                     if presentAddNewItem {
                         
                         TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
                             self.presentAddNewItem.toggle()
-                            
                         }
                     }
                 }.navigationBarItems(trailing: EditButton())
                 
                 Button(action: { self.presentAddNewItem.toggle()
                 }) {
-
                     HStack{
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 20,height: 20)
-                        
                         Text("Add New Task")
                     }
-
-                    
                 }
                 .accessibility(identifier: "addTaskButton")
                 .padding()
-                
-                
             }
             .navigationBarTitle("Tasks")
         }
-        
     }
-    
-
-    
 
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
@@ -77,12 +59,9 @@ struct TaskListView: View {
     
     struct TaskCell: View {
 
-        
         @ObservedObject var taskCellVM: TaskCellViewModel
         
         var onCommit: (Task) -> (Void) = { _ in }
-        
-        
 
         var body: some View {
             HStack {
