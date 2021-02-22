@@ -14,8 +14,6 @@ struct TaskListView: View {
     @ObservedObject var taskListVM = TaskListViewModel()
     
     @State var presentAddNewItem = false
-    
-    
 
     var body: some View {
         
@@ -33,7 +31,16 @@ struct TaskListView: View {
                             self.presentAddNewItem.toggle()
                         }
                     }
-                }.navigationBarItems(trailing: EditButton())
+                }.toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(
+                            destination: DarkMode()) {
+                            Text("DarkMode")
+                        }
+                    }
+                }
+                
+                
                 
                 Button(action: { self.presentAddNewItem.toggle()
                 }) {
@@ -75,7 +82,7 @@ struct TaskListView: View {
                 TextField("Enter the task title", text: $taskCellVM.task.title, onCommit: {
                     
                     self.onCommit(self.taskCellVM.task)
-                    print("nu skapades den")
+//                    print("nu skapades den")
                 })
                 .accessibility(identifier: "taskNameTextField")
             }
