@@ -31,12 +31,11 @@ class TaskListViewModel: ObservableObject {
             }
             .assign(to: \.taskCellViewModels, on: self)
             .store(in: &cancellables)
+        
+      
 
         
     //    }
-        
-      
-        
         
         
         
