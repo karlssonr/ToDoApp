@@ -21,7 +21,7 @@ class Encryption {
     
     init() {
         
-        print("!!!")
+        
         
         let myPassword = "password"
         let key = keyFromPassword(myPassword)
@@ -31,11 +31,11 @@ class Encryption {
         let base64EncodedString = try? encryptCodableObject(user, usingKey: key)
     
         
-        print(base64EncodedString)
+        print("!!!", base64EncodedString)
         
         let newObject = try! decryptStringToCodableOject(User.self, from: base64EncodedString!, usingKey: key)
-        print("Name: " ,{newObject.name})
-        print("Password: ", {newObject.password})
+        print("Name: " ,newObject.name)
+        print("Password: ", newObject.password)
     }
 
 

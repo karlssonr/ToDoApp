@@ -8,6 +8,8 @@
 import XCTest
 
 class when_the_user_types_task_name_and_press_add_button: XCTestCase {
+    
+    let encryptTest =
 
     private var app: XCUIApplication!
 
@@ -21,10 +23,11 @@ class when_the_user_types_task_name_and_press_add_button: XCTestCase {
     
     func test_should_add_task_to_the_list() {
         
+
         
         
-        let addTaskButton = self.app.buttons["addTaskButton"]
-        addTaskButton.tap()
+//        let addTaskButton = self.app.buttons["addTaskButton"]
+//        addTaskButton.tap()
         
 
     }
