@@ -65,7 +65,6 @@ func encryptCodableObject<T: Codable>(_ object: T, usingKey key: SymmetricKey) t
   // Convert the encryptedData to a base64 string which is the
   // format that it can be transported in
   return encryptedData.combined.base64EncodedString()
-    
 }
 
 

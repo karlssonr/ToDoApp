@@ -17,117 +17,66 @@ class TaskRepository: ObservableObject {
     var taskFromDB : Task?
     var titles = [String]()
     
-
     let db = Firestore.firestore()
     
     init() {
-       
-        loadData()
+        print("before")
+        DispatchQueue.main.async {
+            self.loadData()
+            print("testar", self.loadData())
+        }
+        print("after")
         Encryption.init()
-        
-        
-   
-        
-
     }
 
     func sortByTitle() {
         self.titles.sort { $0 < $1 }
-        
     }
     
-                
     //Cache function
     func cacheTasks() {
-        let taskArray = tasks
+        _ = taskFromDB
         let object = TaskHolder.init(tasks: tasks)
         TaskCache.taskCache.setObject(object , forKey: "Task")
-
     }
-    
-    
-    //Turn off Firestore cache
-    func enableOffline() {
-       let settings = FirestoreSettings()
-       settings.isPersistenceEnabled = false
-       
-       let db = Firestore.firestore()
-       db.settings = settings
-   }
-   
-    
-    //Cache size
-    func cacheSize() {
-       let settings = Firestore.firestore().settings
-       settings.cacheSizeBytes = 100
-       Firestore.firestore().settings = settings
-   }
     
    
     func loadData() {
-
         self.titles.removeAll()
-        
         let userId = Auth.auth().currentUser?.uid
-        
-
         db.collection("tasks")
-
             .whereField("userId", isEqualTo: userId)
             .addSnapshotListener { (querySnapshot, error) in
                 if let querySnapshot = querySnapshot {
                     self.tasks = querySnapshot.documents.compactMap { document in
                         do {
-                            
-                            
                             guard let x = try document.data(as: Task.self) else {return nil}
-
-    
                             self.taskFromDB = x
-                            
-                            
-                            
                             self.titles.append(x.title)
-                            
-    
                             return x
-                            
                         }
                         catch {
                             print(error)
                         }
                         return nil
-
                     }
-
-         
-
                 }
                 self.cacheTasks()
                 self.sortByTitle()
                 print("sort ", self.titles)
-                
                 let taskFromCache = TaskCache.taskCache.object(forKey: "Task")
-
                 print("4444" , taskFromCache?.tasks)
-                
-                
-
             }
-
     }
 
+   
     
-
     func addTask(_ task: Task) {
-        
         do {
             var addedTask = task
             addedTask.userId = Auth.auth().currentUser?.uid
-
             let _ = try! db.collection("tasks").addDocument(from: addedTask)
         }
-        
         do {
             cacheTasks()
         }
@@ -159,7 +108,6 @@ class TaskRepository: ObservableObject {
             }
         }
     }
-    
 }
 
 
