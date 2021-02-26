@@ -16,34 +16,28 @@ struct TaskListView: View {
     @State var presentAddNewItem = false
     @State var showCachedTasks = false
     
-    
-    
     var body: some View {
-        
         NavigationView {
             VStack(alignment: .leading) {
                 List {
                     ForEach(taskListVM.taskCellViewModels) { taskCellVM in
                         TaskCell(taskCellVM: taskCellVM)
                     }.onDelete(perform: { indexSet in
-                        
-                        
                     })
-                    
-                    
-                    
-                    
                     if presentAddNewItem {
-                        
                         TaskCell(taskCellVM: TaskCellViewModel(task: Task( title: "", completed: false))) { task in
                             self.taskListVM.addTask(task: task)
                             self.presentAddNewItem.toggle()
-                            
                         }
                     }
-                    
-                    
-                }.navigationBarItems(trailing: EditButton())
+                }.toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(
+                            destination: DarkMode()) {
+                            Text("DarkMode")
+                        }
+                    }
+                }
                 
                 if showCachedTasks {
                     List {
@@ -53,18 +47,13 @@ struct TaskListView: View {
                     }}
                 
                 Button(action: {
-                    
                     self.showCachedTasks.toggle()
-                    
                 }) {
-                    
                     Text("Toggle CachedTasks")
-                    
                 }
                 
                 Button(action: { self.presentAddNewItem.toggle()
                 }) {
-                    
                     HStack{
                         Image(systemName: "plus.circle.fill")
                             .resizable()
@@ -72,22 +61,13 @@ struct TaskListView: View {
                         
                         Text("Add New Task")
                     }
-                    
-                    
                 }
                 .accessibility(identifier: "addTaskButton")
                 .padding()
-                
-                
             }
             .navigationBarTitle("Tasks")
         }
-        
     }
-    
-    
-    
-    
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             TaskListView()
@@ -96,13 +76,9 @@ struct TaskListView: View {
     
     struct TaskCell: View {
         
-        
         @ObservedObject var taskCellVM: TaskCellViewModel
         
         var onCommit: (Task) -> (Void) = { _ in }
-        
-        
-        
         var body: some View {
             HStack {
                 Image(systemName: taskCellVM.task.completed ? "checkmark.circle.fill" : "circle")
@@ -121,8 +97,4 @@ struct TaskListView: View {
             }
         }
     }
-    
-    
-    
-    
 }
