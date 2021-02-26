@@ -38,48 +38,31 @@ class Encryption {
         print("Password: ", {newObject.password})
     }
 
-
+// skapar en SHA256 algoritm som lägger lösenordet i en SymmetricKey som används i krypteringstillfället och dekrypterings tillfället
 func keyFromPassword(_ password: String) -> SymmetricKey {
-  // Create a SHA256 hash from the provided password
   let hash = SHA256.hash(data: password.data(using: .utf8)!)
-  // Convert the SHA256 to a string. This will be a 64 byte string
   let hashString = hash.map { String(format: "%02hhx", $0) }.joined()
-  // Convert to 32 bytes
   let subString = String(hashString.prefix(32))
-  // Convert the substring to data
   let keyData = subString.data(using: .utf8)!
-
-  // Create the key use keyData as the seed
   return SymmetricKey(data: keyData)
 }
 
-
+//kryptera datan i en försluten box med hjälp av ChaChaPoly algoritmen, där lagras även nyckeln som används till att möjligöra att mottagen kan ta emot den krypterade datan
 func encryptCodableObject<T: Codable>(_ object: T, usingKey key: SymmetricKey) throws -> String {
-  // Convert to JSON in a Data record
   let encoder = JSONEncoder()
   let userData = try encoder.encode(object)
-
-  // Encrypt the userData
   let encryptedData = try ChaChaPoly.seal(userData, using: key)
-
-  // Convert the encryptedData to a base64 string which is the
-  // format that it can be transported in
   return encryptedData.combined.base64EncodedString()
 }
 
-
+// tar emot boxen och använder nyckeln för att öppna boxen och komma åt datan
 func decryptStringToCodableOject<T: Codable>(_ type: T.Type, from string: String,
                                              usingKey key: SymmetricKey) throws -> T {
-  // Convert the base64 string into a Data object
   let data = Data(base64Encoded: string)!
-  // Put the data in a sealed box
   let box = try ChaChaPoly.SealedBox(combined: data)
-  // Extract the data from the sealedbox using the decryption key
   let decryptedData = try ChaChaPoly.open(box, using: key)
-  // The decrypted block needed to be json decoded
   let decoder = JSONDecoder()
   let object = try decoder.decode(type, from: decryptedData)
-  // Return the new object
   return object
 }
 

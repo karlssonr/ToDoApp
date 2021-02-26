@@ -23,7 +23,7 @@ class TaskRepository: ObservableObject {
         print("before")
         DispatchQueue.main.async {
             self.loadData()
-            print("testar", self.loadData())
+            print("ladda data", self.loadData())
         }
         print("after")
         Encryption.init()

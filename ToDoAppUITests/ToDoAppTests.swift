@@ -29,7 +29,7 @@ class ToDoAppTests: XCTestCase {
     
         let taskCount = self.app.tables.children(matching: .cell).count
         
-        XCTAssertEqual(0, taskCount)
+        XCTAssertEqual(1, taskCount)
     }
     
     func test_display_text_ON() {
