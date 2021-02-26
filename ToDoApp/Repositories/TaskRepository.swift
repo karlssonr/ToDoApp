@@ -24,12 +24,15 @@ class TaskRepository: ObservableObject {
     
     init() {
         print("bubbleSortArray Before: " ,bubbleSortArray)
+        print("Before dispatchQue")
         DispatchQueue.main.async {
             self.loadData()
             print("ladda data", self.loadData())
         }
+        print("after dispatchQue")
         Encryption.init()
-        bubbleSort(array: &bubbleSortArray)
+        self.bubbleSort(array: &self.bubbleSortArray)
+        print("ladda bubblesort", self.bubbleSortArray)
         print("bubbleSortArray After: " ,bubbleSortArray)
     }
     
@@ -55,27 +58,7 @@ class TaskRepository: ObservableObject {
         
         let object = TaskHolder.init(tasks: tasks)
         TaskCache.taskCache.setObject(object , forKey: "Task")
-        
     }
-    
-    
-    //Turn off Firestore cache
-    func enableOffline() {
-        let settings = FirestoreSettings()
-        settings.isPersistenceEnabled = false
-        
-        let db = Firestore.firestore()
-        db.settings = settings
-    }
-    
-    
-    //Cache size
-    func cacheSize() {
-        let settings = Firestore.firestore().settings
-        settings.cacheSizeBytes = 100
-        Firestore.firestore().settings = settings
-    }
-    
     
     func loadData() {
         
@@ -94,56 +77,28 @@ class TaskRepository: ObservableObject {
                             guard let x = try document.data(as: Task.self) else {return nil}
                             self.taskFromDB = x
                             self.titles.append(x.title)
-                            
-                            
                             return x
-                            
                         }
                         catch {
                             print(error)
                         }
                         return nil
-                        
                     }
-                    
-                    
-                    
                 }
                 self.cacheTasks()
-                
-                print("sort ", self.titles)
-                
                 if let taskFromCache = TaskCache.taskCache.object(forKey: "Task") {
-                    
+                    self.tasksFromCache.removeAll()
                     self.tasksFromCache.append(contentsOf: taskFromCache.tasks)
                 }
-                print("TaskFromCache:  " , self.tasksFromCache)
-                
-                
-                
-                
-                
-                
-                
-                
-                
             }
-        
-        
-        
     }
     
-    
-    
     func addTask(_ task: Task) {
-        
         do {
             var addedTask = task
             addedTask.userId = Auth.auth().currentUser?.uid
-            
             let _ = try! db.collection("tasks").addDocument(from: addedTask)
         }
-        
         do {
             cacheTasks()
         }

@@ -43,6 +43,19 @@ class ToDoAppUITests: XCTestCase {
         XCTAssertEqual("ON", darkModeText.label)
     }
     
+    func testMorePandasThanGiraffs() {
+        let pandas = 4
+        let giraffs = 3
+        
+        XCTAssertLessThan(giraffs, pandas)
+    }
+    
+    func testTheTruth() {
+        let worldIsFlat = false
+        
+        XCTAssertFalse(worldIsFlat)
+    }
+    
    
 
 }

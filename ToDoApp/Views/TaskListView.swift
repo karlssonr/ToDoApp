@@ -91,7 +91,7 @@ struct TaskListView: View {
                 TextField("Enter the task title", text: $taskCellVM.task.title, onCommit: {
                     
                     self.onCommit(self.taskCellVM.task)
-                    print("nu skapades den")
+//                    print("nu skapades den")
                 })
                 .accessibility(identifier: "taskNameTextField")
             }

@@ -18,20 +18,16 @@ class TaskListViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        
-    
-
-        
-      
-            taskRepository.$tasks.map { tasks in
-                tasks.map { task in
-                    
-                    TaskCellViewModel(task: task)
-                    
-                }
+       
+        taskRepository.$tasks.map { tasks in
+            tasks.map { task in
+                
+                TaskCellViewModel(task: task)
+                
             }
-            .assign(to: \.taskCellViewModels, on: self)
-            .store(in: &cancellables)
+        }
+        .assign(to: \.taskCellViewModels, on: self)
+        .store(in: &cancellables)
         
         
         
@@ -44,28 +40,28 @@ class TaskListViewModel: ObservableObject {
         }
         .assign(to: \.taskCellViewModelsFromCache, on: self)
         .store(in: &cancellables)
-    
-    
-        
-      
-
-        
-  
         
         
-
+        
+        
+        
+        
+        
+        
+        
+        
     }
-
+    
     
     func addTask(task: Task) {
         taskRepository.addTask(task)
-
-
+        
+        
     }
     
     func deleteTask(task: Task) {
         taskRepository.deleteTask(task: task)
-
-
+        
+        
     }
 }
