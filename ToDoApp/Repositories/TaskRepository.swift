@@ -13,33 +13,54 @@ import FirebaseFirestoreSwift
 class TaskRepository: ObservableObject {
     
     @Published var tasks = [Task]()
+    @Published var tasksFromCache = [Task]()
     
     var taskFromDB : Task?
     var titles = [String]()
+    
+    var bubbleSortArray = [31, 2 ,65 ,5 ,4 ,3 , 8 ,9 ,12, 14 ,21 ]
+    
     
 
     let db = Firestore.firestore()
     
     init() {
-       
+        print("bubbleSortArray Before: " ,bubbleSortArray)
         loadData()
         Encryption.init()
-        
+        bubbleSort(array: &bubbleSortArray)
+        print("bubbleSortArray After: " ,bubbleSortArray)
+
         
    
         
 
     }
 
-    func sortByTitle() {
-        self.titles.sort { $0 < $1 }
+    
         
+    func bubbleSort(array: inout [Int]) -> [Int] {
+      var isSorted = false
+      var counter = 0
+
+      while !isSorted {
+        isSorted = true
+        for i in 0..<array.count - 1 - counter {
+          if array[i] > array[i + 1] {
+            array.swapAt(i, i + 1)
+            isSorted = false
+          }
+        }
+        counter = counter + 1
+      }
+      return array
     }
+    
     
                 
     //Cache function
     func cacheTasks() {
-        let taskArray = tasks
+        
         let object = TaskHolder.init(tasks: tasks)
         TaskCache.taskCache.setObject(object , forKey: "Task")
 
@@ -104,16 +125,26 @@ class TaskRepository: ObservableObject {
 
                 }
                 self.cacheTasks()
-                self.sortByTitle()
+               
                 print("sort ", self.titles)
                 
-                let taskFromCache = TaskCache.taskCache.object(forKey: "Task")
+                if let taskFromCache = TaskCache.taskCache.object(forKey: "Task") {
 
-                print("4444" , taskFromCache?.tasks)
+                    self.tasksFromCache.append(contentsOf: taskFromCache.tasks)
+                }
+                print("TaskFromCache:  " , self.tasksFromCache)
+                
+                
+                
+                
+                
+                
                 
                 
 
             }
+        
+        
 
     }
 
